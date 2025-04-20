@@ -19,4 +19,5 @@ def get_info() -> str:
 # Run the server
 if __name__ == "__main__":
     print("Starting simple test server...")
-    mcp.run(port=8000)
+    mcp.run() 
+ 
