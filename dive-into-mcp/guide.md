@@ -224,6 +224,63 @@ mcp install your_server.py
 
 ## Advanced Concepts
 
+### Tool Discovery and Selection Deep Dive
+
+One of the most powerful aspects of MCP is how it enables Claude to autonomously discover and select appropriate tools based on context. Let's dive deeper into this process:
+
+#### JSON-RPC 2.0 Underpinnings
+
+MCP is built on JSON-RPC 2.0, which provides a standardised message format for communication between clients and servers. This enables Claude to:
+
+1. **Receive Tool Metadata**: When connecting to an MCP server, Claude receives detailed metadata about each available tool, including:
+   - Name and description
+   - Required parameters and their types
+   - Expected return values
+   - Documentation strings
+
+2. **Understand Tool Capabilities**: Claude parses this metadata to build an internal representation of what each tool can do, similar to how humans understand tool functionality from documentation.
+
+#### Contextual Tool Selection
+
+When a user asks a question, Claude performs a sophisticated matching process to determine which tools might help:
+
+1. **Query Analysis**: Claude analyzes the semantic meaning of the user's query
+2. **Tool Matching**: It compares this meaning against the capabilities of available tools
+3. **Parameter Extraction**: Claude identifies relevant information from the user's query that can serve as parameters for the selected tools
+4. **Confidence Assessment**: Claude evaluates how confident it is that a particular tool will help answer the query
+
+This process happens automatically and invisibly to the user, who simply experiences Claude providing helpful answers.
+#### Claude's Tool Selection Process
+
+When a user asks a question and Claude has access to multiple MCP tools and resources, Claude needs to decide which ones are relevant. This matching process involves several sophisticated steps:
+
+1. **Semantic Understanding of the Query**: 
+   First, Claude analyzes the user's question to understand the intent and requirements. For example, if you ask "What's the weather in London?", Claude identifies this as a request for weather information about a specific location.
+
+2. **Tool Capability Analysis**:
+   Claude examines each available MCP tool by looking at:
+   - The tool's name and description
+   - The documentation strings (docstrings) that explain what the tool does
+   - The input parameters the tool expects
+   - The type of output the tool returns
+
+3. **Relevance Scoring**:
+   Claude then scores each tool based on how well it matches the user's intent. This isn't just simple keyword matching - it's a deep semantic comparison between what the user needs and what each tool provides.
+
+4. **Parameter Extraction and Preparation**:
+   For tools that seem relevant, Claude extracts appropriate parameter values from the user's query. Taking our weather example, Claude would recognize "London" as the city parameter for a weather-checking tool.
+
+5. **Confidence Assessment**:
+   Before actually invoking a tool, Claude evaluates its confidence that the selected tool will help with the user's request. If confidence is high, Claude proceeds with using the tool.
+
+6. **Multi-Tool Planning**:
+   For complex queries, Claude may determine that multiple tools need to be used in sequence. It then plans the order of operations, considering how the output of one tool might serve as input for another.
+
+What makes this process particularly sophisticated is how it relies on Claude's general reasoning capabilities rather than hard-coded rules. Claude is essentially "reading" the documentation of each tool and making judgments about their applicability to the current situation, much like a human developer would decide which library function to call.
+
+This matching process happens invisibly to the user, who simply experiences Claude providing helpful answers without needing to specify which tools to use or how to use them. The entire process is part of what makes MCP particularly powerful compared to traditional API integration approaches where explicit function calls must be programmed.
+
+
 ### Context Object
 
 The Context object gives your tools and resources access to MCP capabilities:
@@ -286,4 +343,9 @@ MCP's approach of separating the AI reasoning layer from the data and tools laye
 - [MCP GitHub Repository](https://github.com/modelcontextprotocol)
 - [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk)
 - [Anthropic Claude Desktop](https://www.anthropic.com/claude)
-- [Cursor IDE](https://cursor.sh/)
+
+
+
+-------------------------
+
+
