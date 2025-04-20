@@ -1,3 +1,8 @@
+# Introduction 
+- this repo is from the MCP workshop conducted by Kinesis Lab. We are small self funded Applied AI based in bangalore, India.
+- You can find the **Slides of workshop, the code and A guide** which covers some areas in more detail.
+- Please register here if you want to be invited in the future - https://forms.gle/ck5WKw4sxVEsvCGQ6
+
 # Boredom Killer - MCP Server Guide
 
 A fun MCP server that helps cure boredom with Kanye West quotes, jokes, advice, and trivia. Perfect for tech-savvy urban professionals who need a quick break from their day.
