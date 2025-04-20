@@ -1,4 +1,7 @@
-# kanye_mcp.py
+# This is an MCP demo. Read the README.md attached to the repo if you don't know how to run it. 
+# You would have installed basic stuff, and let the client handle everything else. 
+
+
 import httpx
 import random
 import asyncio
